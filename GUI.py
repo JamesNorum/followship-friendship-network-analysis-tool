@@ -13,24 +13,30 @@ def load_data(file_path):
         st.success("Data Loaded Successfully. Please select a model to proceed")
 
 def main():
+    # Set page config
+    st.set_page_config(page_title="Network Analysis Tool", layout="wide")
+    
     # Initialize the Streamlit app
-    st.title("Twitter Followship Network Analysis")
-    
-    # Create a sidebar menu for model selection
-    selected_model = st.sidebar.radio("Select a Model", 
-                                      ["Visualize Followers of A Target", 
-                                       "Visualize Targets of A Follower", 
-                                       "Bidirectional View of A User", 
-                                       "Global Statistics of the Network"], 
-                                      index=None)
+    st.title("Friendship/Followship Network Analysis Tool")
 
-    # Option to use a default dataset or upload a file
-    dataset_choice = st.radio("Choose your data source:", 
-                              ["Upload CSV", "Use Default Dataset"], 
-                              index=None)
-    
+    # Create a sidebar menu for model selection
+    with st.sidebar:
+        
+        # Model selection
+        st.markdown("## Analysis Options")
+        selected_model = st.selectbox("Select an Analysis", 
+                                      ["Visualize Followers of a Target User", 
+                                       "Visualize Targets a User Follows", 
+                                       "Bidirectional View of a User", 
+                                       "Global Statistics of the Network"], index=None, key="model_selection")
+        
+        # Data source selection
+        st.markdown("## Data Source")
+        dataset_choice = st.radio("Choose your data source:", 
+                                  ["Upload CSV", "Use Default Dataset"], index=None, key="data_source_selection")
+        
     if dataset_choice == "Upload CSV":
-        user_file_path = st.file_uploader("Upload a CSV file", type="csv")
+        user_file_path = st.sidebar.file_uploader("Upload a CSV file", type="csv")
         
         if user_file_path is not None:
             if 'df' not in st.session_state or st.session_state['uploaded_file'] != user_file_path:
@@ -38,24 +44,26 @@ def main():
                 st.session_state['uploaded_file'] = user_file_path
 
     elif dataset_choice == "Use Default Dataset":
-        default_file_path = 'Twitter-dataset\data\edges.csv'
+        default_file_path = 'Twitter-dataset/data/edges.csv'
         if 'df' not in st.session_state:
             load_data(default_file_path)
+    
+    # Main area for content
+    with st.container():
+        # Check if the data is loaded and then pass it to the selected model
+        if 'df' in st.session_state:
+            df = st.session_state['df']
 
-    # Check if the data is loaded and then pass it to the selected model
-    if 'df' in st.session_state:
-        df = st.session_state['df']
-
-        if selected_model == "Visualize Followers of A Target":
-            fot.run(df)
-        elif selected_model == "Visualize Targets of A Follower":
-            tof.run(df)
-        elif selected_model == "Bidirectional View of A User":
-            bv.run(df)
-        elif selected_model == "Global Statistics of the Network":
-            gs.run(df)
-    else:
-        st.error("Please select a data source to proceed")
+            if selected_model == "Visualize Followers of a Target User":
+                fot.run(df)
+            elif selected_model == "Visualize Targets a User Follows":
+                tof.run(df)
+            elif selected_model == "Bidirectional View of a User":
+                bv.run(df)
+            elif selected_model == "Global Statistics of the Network":
+                gs.run(df)
+        else:
+            st.error("Please select a data source to proceed")
 
 if __name__ == "__main__":
     main()
