@@ -22,7 +22,7 @@ def most_active_followers(df, range_of_interest):
     plt.yscale('log')
 
     # Adding a title and labels
-    plt.title('Log-Scale Distribution of "Following" Count', fontsize=20)
+    plt.title('Log-Scale Distribution of "Follower" Count', fontsize=20)
     plt.xlabel('Follower Count', fontsize=16)
     plt.ylabel('Frequency', fontsize=16)
 
@@ -175,6 +175,12 @@ def run(df):
             st.write(f"### Top {range_of_interest} Influential Users by Degree Centrality")
             st.dataframe(degree_centrality)
     
+    if st.button("Show PageRank"):
+        with st.spinner("Calculating PageRank..."):
+            pagerank = get_pagerank(data, range_of_interest)
+            st.write(f"### Top {range_of_interest} Influential Users by PageRank")
+            st.dataframe(pagerank)
+
     if st.button("Show HITS Scores"):
         with st.spinner("Calculating HITS Scores..."):
             top_hubs, top_authorities = get_hits_scores(data, range_of_interest)
@@ -182,13 +188,6 @@ def run(df):
             st.dataframe(top_hubs)
             st.write(f"### Top {range_of_interest} Authorities")
             st.dataframe(top_authorities)
-
-    if st.button("Show PageRank"):
-        with st.spinner("Calculating PageRank..."):
-            pagerank = get_pagerank(data, range_of_interest)
-            st.write(f"### Top {range_of_interest} Influential Users by PageRank")
-            st.dataframe(pagerank)
-
 
 if __name__ == "__main__":
     run()
