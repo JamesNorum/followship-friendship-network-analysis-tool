@@ -102,7 +102,7 @@ def run(df):
         else:
             st.error("User ID must be between 1 and 11316811.")
     except ValueError:
-        st.error("Please enter a valid integer as User ID. Choose a target user from the data below.")
+        st.error("Please enter a valid integer as User ID. Choose an ID from the data below.")
 
     # Display the head of the data so user can pick a target
     st.dataframe(data, height=150)

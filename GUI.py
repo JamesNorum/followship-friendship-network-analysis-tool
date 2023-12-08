@@ -12,8 +12,6 @@ def load_data(file):
         st.session_state['df'] = df
         st.success("Data Loaded Successfully. Please select a model to proceed")
 
-
-
 def main():
     # Set page config
     st.set_page_config(page_title="Network Analysis Tool", layout="wide")
@@ -70,7 +68,15 @@ def main():
         if user_file_path is not None:
             if 'last_uploaded_file' not in st.session_state or st.session_state['last_uploaded_file'] != user_file_path:
                 load_data(user_file_path)
-                st.session_state['last_uploaded_file'] = user_file_path
+                st.session_state['last_uploaded_file'] = user_file_path  
+                
+        else:
+            # Clear the dataframe from session state if the uploaded file is removed
+            if 'df' in st.session_state:
+                del st.session_state['df']
+            if 'last_uploaded_file' in st.session_state:
+                del st.session_state['last_uploaded_file']
+            st.error("Please upload a CSV file to proceed")
 
     elif dataset_choice == "Use Default Dataset":
         default_file_path = 'Twitter-dataset/data/edges.csv'
@@ -79,20 +85,23 @@ def main():
 
     # Main area for content
     with st.container():
-        if dataset_choice == "Upload CSV" and 'df' in st.session_state:
-            df = st.session_state['df']
+        
+        if dataset_choice == "Upload CSV": #and 'df' in st.session_state:
+            if 'df' in st.session_state:
+                df = st.session_state['df']
+                if selected_model == "Visualize Followers of a Target User":
+                    fot.run(df)
+                elif selected_model == "Visualize Targets a User Follows":
+                    tof.run(df)
+                elif selected_model == "Bidirectional View of a User":
+                    bv.run(df)
+                elif selected_model == "Global Statistics of the Network":
+                    ns.run(df)
+                else:
+                    return
+
         elif dataset_choice == "Use Default Dataset" and 'default_df' in st.session_state:
             df = st.session_state['default_df']
-        else:
-            st.error("Please select a data source to proceed")
-            return
-
-    # Main area for content
-    with st.container():
-        # Check if the data is loaded and then pass it to the selected model
-        if 'df' in st.session_state:
-            df = st.session_state['df']
-
             if selected_model == "Visualize Followers of a Target User":
                 fot.run(df)
             elif selected_model == "Visualize Targets a User Follows":
@@ -101,8 +110,11 @@ def main():
                 bv.run(df)
             elif selected_model == "Global Statistics of the Network":
                 ns.run(df)
+            else:
+                return
         else:
             st.error("Please select a data source to proceed")
+            return
 
 if __name__ == "__main__":
     main()
