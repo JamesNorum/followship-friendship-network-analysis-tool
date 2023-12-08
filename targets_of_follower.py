@@ -103,8 +103,8 @@ def run(df):
     except ValueError:
         st.error("Please enter a valid integer as User ID. Choose an ID from the data below.")
 
-    # Display the head of the data so user can pick a target
-    st.dataframe(data, height=150)
+    # Display the head the data so user can pick a target
+    st.dataframe(data[0:1000], height=150)
     
     if st.button('Visualize') and valid_input is True:
         with st.spinner('Generating Visualization...'):

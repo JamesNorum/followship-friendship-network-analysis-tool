@@ -82,6 +82,7 @@ def main():
         default_file_path = 'Twitter-dataset/data/edges.csv'
         if 'default_df' not in st.session_state:
             st.session_state['default_df'] = pd.read_csv(default_file_path, header=None, names=['Follower', 'Target'])
+            st.success("Data Loaded Successfully.")
 
     # Main area for content
     with st.container():
