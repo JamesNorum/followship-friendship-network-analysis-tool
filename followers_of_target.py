@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import streamlit as st
 import plotly.graph_objects as go
-from pyvis.network import Network
+#from pyvis.network import Network
 
 
 def get_followers_of_target(target, df):

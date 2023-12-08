@@ -3,7 +3,7 @@ import pandas as pd
 import bidirectional_view_of_user as bv
 import followers_of_target as fot
 import targets_of_follower as tof
-import global_stats as gs
+import network_stats as ns
 
 def load_data(file_path):
     # This function loads the data and stores it in the session state
@@ -18,6 +18,24 @@ def main():
     
     # Initialize the Streamlit app
     st.title("Friendship/Followship Network Analysis Tool")
+
+    # Dataset Structure Explanation
+    with st.expander("Data Format Information"):
+        st.markdown("""
+        ### Default Dataset: `edges.csv`
+        The default dataset, `edges.csv`, represents a friendship/followership network. 
+        In this dataset, friends or followers are represented as directed edges in the format:
+        ```
+        Follower,Target
+        ```
+        For example, an entry `1,2` indicates that the user with ID `1` is following the user with ID `2`.
+        
+        ### Custom CSV Format
+        If you wish to use your own data, please ensure it follows the same format. Each row should represent a directed edge from a follower to a target user. For instance:
+        ```
+        FollowerID,TargetID
+        ```
+        """)
 
     # Create a sidebar menu for model selection
     with st.sidebar:
@@ -61,7 +79,7 @@ def main():
             elif selected_model == "Bidirectional View of a User":
                 bv.run(df)
             elif selected_model == "Global Statistics of the Network":
-                gs.run(df)
+                ns.run(df)
         else:
             st.error("Please select a data source to proceed")
 
