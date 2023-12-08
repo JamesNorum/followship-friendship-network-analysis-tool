@@ -30,7 +30,6 @@ def most_active_followers(df, range_of_interest):
     # Customizing the tick marks and grid lines for better readability
     plt.xticks(fontsize=12)
     plt.yticks(fontsize=12)
-    plt.grid(True, which="both", linestyle='--', linewidth=0.5)
 
     # Make sure everything fits without overlapping
     plt.tight_layout()
@@ -61,7 +60,6 @@ def most_followed_targets(df, range_of_interest):
     # Customizing the tick marks and grid lines for better readability
     plt.xticks(fontsize=12)
     plt.yticks(fontsize=12)
-    plt.grid(True, which="both", linestyle='--', linewidth=0.5)
 
     # Make sure everything fits without overlapping
     plt.tight_layout()
@@ -73,10 +71,10 @@ def create_subgraph(edges_list):
 
 def get_pagerank(df, range_of_interest):
 
-    sub_df = df.sample(100000, random_state=987)
+    data = df
 
     # Splitting the DataFrame into chunks for parallel processing
-    df_split = np.array_split(sub_df, 4)
+    df_split = np.array_split(data, 4)
 
     # Create a pool of processes
     with Pool(4) as pool:
@@ -93,8 +91,8 @@ def get_pagerank(df, range_of_interest):
 
     # Process the pagerank results
     pagerank_df = pd.DataFrame.from_dict(pagerank, orient='index', columns=['Pagerank'])
-    pagerank_df['User'] = pagerank_df.index
-    pagerank_df.reset_index(drop=True, inplace=True)
+    pagerank_df['User ID'] = pagerank_df.index
+    pagerank_df.reset_index(drop=True, inplace=False)
 
     # Get the top nodes efficiently
     top_pagerank_df = pagerank_df.nlargest(range_of_interest, 'Pagerank')
@@ -108,7 +106,7 @@ def get_degree_centrality(df, range_of_interest):
     # Convert to DataFrame
     degree_centrality_df = pd.DataFrame.from_dict(degree_centrality, orient='index', columns=['DegreeCentrality'])
     degree_centrality_df['User'] = degree_centrality_df.index
-    degree_centrality_df.reset_index(drop=True, inplace=True)
+    degree_centrality_df.reset_index(drop=True, inplace=False)
 
     # Get the top nodes
     top_degree_centrality_df = degree_centrality_df.nlargest(range_of_interest, 'DegreeCentrality')
@@ -130,8 +128,8 @@ def get_hits_scores(df, range_of_interest):
     hubs_df['User'] = hubs_df.index
     authorities_df['User'] = authorities_df.index
 
-    hubs_df.reset_index(drop=True, inplace=True)
-    authorities_df.reset_index(drop=True, inplace=True)
+    hubs_df.reset_index(drop=True, inplace=False)
+    authorities_df.reset_index(drop=True, inplace=False)
 
     # Get the top nodes by hub score and authority score
     top_hubs_df = hubs_df.nlargest(range_of_interest, 'HubScore')
@@ -159,7 +157,7 @@ def run(df):
             st.dataframe(active_followers)
             st.write("### Statistical Summary of Following Count")
             st.dataframe(stats_followers)
-            st.dataframe(f"A follower has an average of {stats_followers['mean']} targets")
+            st.markdown(f"**A follower has an average of {stats_followers['mean']} targets**")
             st.pyplot(plot_followers)
 
     if st.button("Show Most Followed Targets"):
@@ -169,7 +167,7 @@ def run(df):
             st.dataframe(followed_targets)
             st.write("### Statistical Summary of Target Count")
             st.dataframe(stats_targets)
-            st.dataframe(f"A target has an average of {stats_targets['mean']} followers")
+            st.markdown(f"**A target has an average of {stats_targets['mean']} followers**")
             st.pyplot(plot_targets)
 
     if st.button("Show Degree Centrality"):
@@ -190,8 +188,6 @@ def run(df):
         with st.spinner("Calculating PageRank..."):
             pagerank = get_pagerank(data, range_of_interest)
             st.write(f"### Top {range_of_interest} Influential Users by PageRank")
-            st.markdown("### Note: PageRank was calculated on a sample of 100,000 edges")
-            st.markdown("### due to the computational complexity of the algorithm.")
             st.dataframe(pagerank)
 
 
