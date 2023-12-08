@@ -95,7 +95,7 @@ def run(df):
     user_input = st.text_area('Enter Target Users ID')
 
     # Clean user_input
-    user_input = user_input.strip()
+    user_input = user_input.strip().replace(',', '')
     
     # Check if user_input is valid
     valid_input = False
@@ -107,8 +107,11 @@ def run(df):
             st.error("User ID must be between 1 and 11316811.")
     except ValueError:
         st.error("Please enter a valid integer as User ID.")
+
+    # Display the head of the data so user can pick a target
+    st.dataframe(data, height=150)
     
-    if st.button('Visualize'):
+    if st.button('Visualize') and valid_input is True:
         with st.spinner('Generating Visualization...'):
             followers_of_target = get_followers_of_target(user_id, data)
             targets_user_follows = get_targets_user_follows(user_id, data)

@@ -1,4 +1,3 @@
-import pandas as pd
 import networkx as nx
 import streamlit as st
 from pyvis.network import Network
@@ -92,7 +91,7 @@ def run(df):
     user_input = st.text_area('Enter Target Users ID')
 
     # Clean user_input
-    user_input = user_input.strip()
+    user_input = user_input.strip().replace(',', '')
     
     # Check if user_input is valid
     valid_input = False
@@ -103,9 +102,12 @@ def run(df):
         else:
             st.error("User ID must be between 1 and 11316811.")
     except ValueError:
-        st.error("Please enter a valid integer as User ID.")
+        st.error("Please enter a valid integer as User ID. Choose a target user from the data below.")
+
+    # Display the head of the data so user can pick a target
+    st.dataframe(data, height=150)
     
-    if st.button('Visualize'):
+    if st.button('Visualize') and valid_input is True:
         with st.spinner('Generating Visualization...'):
             df_filtered = get_followers_of_target(user_id, data)
             temp_file_path = visualize_followers_of_target(user_id, df_filtered)

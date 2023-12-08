@@ -157,7 +157,7 @@ def run(df):
             st.dataframe(active_followers)
             st.write("### Statistical Summary of Following Count")
             st.dataframe(stats_followers)
-            st.markdown(f"**A follower has an average of {stats_followers['mean']} targets**")
+            st.markdown(f"**A follower has an average of {stats_followers['mean'].round(3)} targets**")
             st.pyplot(plot_followers)
 
     if st.button("Show Most Followed Targets"):
@@ -167,7 +167,7 @@ def run(df):
             st.dataframe(followed_targets)
             st.write("### Statistical Summary of Target Count")
             st.dataframe(stats_targets)
-            st.markdown(f"**A target has an average of {stats_targets['mean']} followers**")
+            st.markdown(f"**A target has an average of {stats_targets['mean'].round(3)} followers**")
             st.pyplot(plot_targets)
 
     if st.button("Show Degree Centrality"):

@@ -5,12 +5,14 @@ import followers_of_target as fot
 import targets_of_follower as tof
 import network_stats as ns
 
-def load_data(file_path):
-    # This function loads the data and stores it in the session state
+def load_data(file):
+    # This function loads the data from the uploaded file
     with st.spinner("Loading dataset..."):
-        df = pd.read_csv(file_path, header=None, names=['Follower', 'Target'])
+        df = pd.read_csv(file, header=None, names=['Follower', 'Target'])
         st.session_state['df'] = df
         st.success("Data Loaded Successfully. Please select a model to proceed")
+
+
 
 def main():
     # Set page config
@@ -24,6 +26,14 @@ def main():
         st.markdown("""
         ### Default Dataset: `edges.csv`
         The default dataset, `edges.csv`, represents a friendship/followership network. 
+
+        ### Basic statistics:
+        ```
+        Number of Nodes: 11,316,811
+        ```
+        ```
+        Number of Edges: 85,331,846
+        ```
         In this dataset, friends or followers are represented as directed edges in the format:
         ```
         Follower,Target
@@ -53,19 +63,30 @@ def main():
         dataset_choice = st.radio("Choose your data source:", 
                                   ["Upload CSV", "Use Default Dataset"], index=None, key="data_source_selection")
         
+    # Handling data source selection
     if dataset_choice == "Upload CSV":
-        user_file_path = st.sidebar.file_uploader("Upload a CSV file", type="csv")
+        user_file_path = st.sidebar.file_uploader("Upload a CSV file", type="csv", key="csv_uploader")
         
         if user_file_path is not None:
-            if 'df' not in st.session_state or st.session_state['uploaded_file'] != user_file_path:
+            if 'last_uploaded_file' not in st.session_state or st.session_state['last_uploaded_file'] != user_file_path:
                 load_data(user_file_path)
-                st.session_state['uploaded_file'] = user_file_path
+                st.session_state['last_uploaded_file'] = user_file_path
 
     elif dataset_choice == "Use Default Dataset":
         default_file_path = 'Twitter-dataset/data/edges.csv'
-        if 'df' not in st.session_state:
-            load_data(default_file_path)
-    
+        if 'default_df' not in st.session_state:
+            st.session_state['default_df'] = pd.read_csv(default_file_path, header=None, names=['Follower', 'Target'])
+
+    # Main area for content
+    with st.container():
+        if dataset_choice == "Upload CSV" and 'df' in st.session_state:
+            df = st.session_state['df']
+        elif dataset_choice == "Use Default Dataset" and 'default_df' in st.session_state:
+            df = st.session_state['default_df']
+        else:
+            st.error("Please select a data source to proceed")
+            return
+
     # Main area for content
     with st.container():
         # Check if the data is loaded and then pass it to the selected model
