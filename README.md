@@ -12,27 +12,27 @@ This Network Analysis Tool is designed to provide insights into social media net
 - **Interactive GUI**: User-friendly web interface built with Streamlit, enabling easy interaction with the tool's features.
 
 ## Installation
-### To set up the tool, ensure you have Python installed on your system. Then, follow the steps below:
+**To set up the tool, ensure you have Python installed on your system. Then, follow the steps below:**
 
-Clone the GitHub repository to your local machine:
+- Clone the GitHub repository to your local machine:
 ```bash
 git clone https://github.com/JamesNorum/followship-friendship-network-analysis-tool
 ```
-Download the dataset and place it in the same directory as the scripts:
+- Download the dataset and place it in the same directory as the scripts:
 ```bash
 https://www.kaggle.com/datasets/mathurinache/twitter-edge-nodes/code
 ```
-Unzip the folder, and delete the .zip file aferwards.
+- Unzip the folder, and delete the .zip file aferwards.
 
-Run the following command in the same directory as your scrips to create a virtual environment:
+- Run the following command in the same directory as your scrips to create a virtual environment:
 ```bash
 python -m venv venv
 ```
-Activate the virtual environment with the following command:
+- Activate the virtual environment with the following command:
 ```bash
 venv\Scripts\activate
 ```
-Install the required packages with the following command:
+- Install the required packages with the following command:
 ```bash
 pip install requirements.txt
 ```
