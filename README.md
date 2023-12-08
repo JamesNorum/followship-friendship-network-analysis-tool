@@ -34,7 +34,7 @@ venv\Scripts\activate
 ```
 - Install the required packages with the following command:
 ```bash
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 ## Usage
 To run the application, navigate to the directory containing the scripts and execute the following command:
