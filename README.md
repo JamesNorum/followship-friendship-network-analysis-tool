@@ -2,14 +2,14 @@
 # Network Analysis Tool
 
 ## Overview
-This Network Analysis Tool is designed to provide insights into social media networks or similar datasets. It features interactive visualization and analysis of network relationships, focusing on followers, targets, and bidirectional views.
+This Network Analysis Tool is designed to provide insights into social media networks or similar datasets. It features interactive visualization and analysis of network relationships.
 
 ## Features
-- **Bidirectional View**: Analyze and visualize the network relationship from both perspectives of a specific user.
-- **Followers of Target**: Explore and visualize the followers of a particular target user.
-- **Targets of Follower**: Examine and visualize the targets a specific follower is following.
-- **Network Statistics**: Provides statistical analysis of the network, such as the most active followers, most followed targets, PageRank, Degree Centrality, and HITS Scores.
 - **Interactive GUI**: User-friendly web interface built with Streamlit, enabling easy interaction with the tool's features.
+- **Followers of Target**: Interactive visualization of the followers of a particular target user.
+- **Targets of Follower**: Interactive visualization of the targets a specific follower is following.
+- **Bidirectional View**: Interactive visualization of relationships from both perspectives of a specific user. For example, if user A follows user B, and user B follows user A, the tool will display this relationship from both perspectives. This is useful for identifying mutual followers or friends.
+- **Network Statistics**: Provides statistical analysis of the network, such as the most active followers, most followed targets, PageRank, Degree Centrality, and HITS Scores.
 
 ## Installation
 To set up the tool, ensure you have Python installed on your system. Then, follow the steps below:
