@@ -3,7 +3,6 @@ import numpy as np
 import streamlit as st
 import networkx as nx
 import matplotlib.pyplot as plt
-import seaborn as sns
 from multiprocessing import Pool
 
 def most_active_followers(df, range_of_interest):
