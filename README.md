@@ -16,7 +16,7 @@ To set up the tool, ensure you have Python installed on your system. Then, follo
 
 Clone the GitHub repository to your local machine:
 ```bash
-git clone https://github.com/JamesNorum/followship-friendship-network-analysis-tool/tree/main
+git clone https://github.com/JamesNorum/followship-friendship-network-analysis-tool
 ```
 Download the dataset and place it in the same directory as the scripts:
 ```bash
