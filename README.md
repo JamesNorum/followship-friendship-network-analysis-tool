@@ -12,7 +12,7 @@ This Network Analysis Tool is designed to provide insights into social media net
 - **Interactive GUI**: User-friendly web interface built with Streamlit, enabling easy interaction with the tool's features.
 
 ## Installation
-To set up the tool, ensure you have Python installed on your system. Then, follow the steps below:
+### To set up the tool, ensure you have Python installed on your system. Then, follow the steps below:
 
 Clone the GitHub repository to your local machine:
 ```bash
