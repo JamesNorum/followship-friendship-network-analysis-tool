@@ -7,7 +7,7 @@ This Network Analysis Tool is designed to provide insights into social media net
 ## Features
 - **Interactive GUI**: User-friendly web interface built with Streamlit, enabling easy interaction with the tool's features.
 - **Followers of Target**: Interactive visualization of the followers of a particular target user.
-- **Targets of Follower**: Interactive visualization of the targets a specific follower is following.
+- **Targets of Follower**: Interactive visualization of the targets a specific user is following.
 - **Bidirectional View**: Interactive visualization of relationships from both perspectives of a specific user. For example, if user A follows user B, and user B follows user A, the tool will display this relationship from both perspectives. This is useful for identifying mutual followers or friends.
 - **Network Statistics**: Provides statistical analysis of the network, such as the most active followers, most followed targets, PageRank, Degree Centrality, and HITS Scores.
 
